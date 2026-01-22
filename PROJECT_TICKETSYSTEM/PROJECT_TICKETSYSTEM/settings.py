@@ -51,6 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'Authentication.middleware.BlockStaff',
 ]
 
 ROOT_URLCONF = 'PROJECT_TICKETSYSTEM.urls'
@@ -72,6 +73,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'PROJECT_TICKETSYSTEM.wsgi.application'
 
+LOGIN_URL = '/'
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
