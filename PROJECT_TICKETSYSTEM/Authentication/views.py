@@ -18,7 +18,7 @@ def login(request):
             messages.error(request, 'Feil brukernavn eller passord')
         else:
             auth_login(request, user)
-            return render(request, 'Home.html')
+            return redirect('home')
 
 def register(request):
     if request.method == 'POST':
