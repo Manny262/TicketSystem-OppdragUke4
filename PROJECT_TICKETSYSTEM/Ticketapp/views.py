@@ -15,13 +15,10 @@ def home(request):
     if request.method == 'POST' and request.user.is_staff:
         if request.POST['inpallCasesView'] == 'True':
             tickets = Tickets.objects.exclude(Status = 'C')
-            allCasesView = True    
-            messages.success(request, 'Alle saker!')   
+            allCasesView = True      
         else:
             tickets = Tickets.objects.filter(Casemanager_id = request.user.id)
             allCasesView = False
-            messages.success(request, 'Dine saker!')      
-
     return render(request, 'scrHome.html', {'username': getName(request.user.id), 'tickets': tickets, 'allCasesView': allCasesView})        
 
 @login_required
