@@ -40,3 +40,8 @@ def register(request):
             return render(request, 'scrRegister.html', {'redirect_after': True})
     
     return render(request, 'scrRegister.html')
+
+@login_required
+def funclogout(request):
+    logout(request)
+    return redirect('scrLogin')
