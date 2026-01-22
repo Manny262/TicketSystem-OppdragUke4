@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>home</title>
+
   </head>
   <body>
     <nav>
@@ -43,12 +44,11 @@
             <th>Created</th>
             <th>Deadline</th>
             <th>Case Manager</th>
-            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {% for ticket in tickets %}
-          <tr>
+          <tr onclick="window.location.href='{% url 'TicketView' ticket.Ticket_id %}';"style="cursor: pointer;">
             <td>{{ ticket.Ticket_id }}</td>
             <td>{{ ticket.Title }}</td>
             <td>{{ ticket.get_Status_display }}</td>

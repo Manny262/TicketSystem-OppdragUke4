@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
-from .forms import newTicketsForm
+from .forms import newTicketsForm, TicketViewForm
 from .models import Tickets
 # Create your views here.
 def getName (id):
@@ -13,7 +13,6 @@ def home(request):
     tickets = Tickets.objects.filter(User_id = request.user.id)
     allCasesView = False 
     if request.method == 'POST' and request.user.is_staff:
-        print(request.POST['inpallCasesView'])
         if request.POST['inpallCasesView'] == 'True':
             tickets = Tickets.objects.exclude(Status = 'C')
             allCasesView = True    
@@ -40,3 +39,16 @@ def Newticket(request):
     else:
         form = newTicketsForm()
     return render(request, 'scrNewticket.html', {'form': form})
+
+def TicketView(request, Ticket_id):
+    ticket = Tickets.objects.get(Ticket_id = Ticket_id)
+    if request.method == 'POST':
+        form = TicketViewForm(request.POST, instance=ticket, user=request.user)
+        if form.is_valid():
+            item = form.save(commit=False)
+            item.save()
+            messages.success(request, 'Sak oppdatert')
+            form = TicketViewForm(instance=ticket, user=request.user)
+    else:
+        form = TicketViewForm(instance=ticket, user=request.user)
+    return render(request, 'scrTicketView.html', {'ticket':ticket, 'form': form})

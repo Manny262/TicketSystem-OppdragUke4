@@ -11,8 +11,8 @@ class Tickets(models.Model):
     User_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_tickets')
     Title = models.CharField(max_length=150, help_text='Tittel på din henvendelse')
     Description = models.TextField()
-    status_choices = {'O': "åpen", 'U': 'under arbeid', 'C': 'lukket'}
-    Status = models.CharField(max_length=1, choices=status_choices)
+    status_choices = [('O', "åpen"), ('U', 'under arbeid'), ('C', 'lukket')]
+    Status = models.CharField(max_length=1, choices=status_choices, default='O')
     Created_at = models.DateTimeField(auto_now_add=True)
     Changed_at = models.DateTimeField(auto_now=True)
     Deadline = models.DateField(default=get_default_deadline)
