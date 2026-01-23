@@ -42,11 +42,19 @@
             </td>
           </tr>
           {% empty %}
+
           <tr>
             <td colspan="7" class="text-center">Du har ingen tickets</td>
           </tr>
           {% endfor %}
         </tbody>
       </table>
-    </div>
+        {% if tickets.has_previous %}
+          <a href="?page={{tickets.previous_page_number}}">forrige side</a>
+        {% endif %}
+        <span>{{tickets.number}} av {{tickets.paginator.num_pages}}</span>
+        {% if tickets.has_next %}
+        <a href="?page={{tickets.next_page_number}}">neste side</a>
+        {% endif %}
+      </div>
 {% endblock %}

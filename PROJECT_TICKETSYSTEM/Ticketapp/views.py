@@ -12,31 +12,40 @@ def getName (id):
         return User.objects.get(id=id).username
     
 
-def pagination(request, table):
+def pagination(table, reqPage):
     paginator = Paginator(table, 15)
-    page_numb = request.GET.get('page')
     try:
-        page_obj = paginator.page(page_numb)
+        tickets = paginator.page(reqPage)
     except PageNotAnInteger:
-        page_obj = paginator.page(1)
+        tickets = paginator.page(1)
     except EmptyPage:
-        page_obj = paginator.page(paginator.num_pages)
+        tickets = paginator.page(paginator.num_pages)
 
-    return page_obj
+    return tickets
 
 @login_required
 def home(request):
-    tickets = Tickets.objects.filter(User_id = request.user.id)
-    allCasesView = False 
+    reqPage = request.GET.get('page')
+
     if request.method == 'POST' and request.user.is_staff:
         inpAllCases = request.POST['inpallCasesView'] 
-       
         if inpAllCases == 'True':
-            tickets = Tickets.objects.exclude(Status = 'C')
-            allCasesView = True      
+            request.session['allCasesView'] = True
         else:
-            tickets = Tickets.objects.filter(Casemanager_id = request.user.id)
-            allCasesView = False
+            request.session['allCasesView'] = False
+
+    allCasesView = request.session.get('allCasesView', False)
+    
+ 
+    if request.user.is_staff and allCasesView:
+        tickets = Tickets.objects.exclude(Status = 'C').order_by('-Created_at')
+    elif request.user.is_staff and not allCasesView:
+        tickets = Tickets.objects.filter(Casemanager_id = request.user.id).order_by('-Created_at')
+    else:
+        tickets = Tickets.objects.filter(User_id = request.user.id).order_by('-Created_at')
+    
+    tickets = pagination(tickets, reqPage)
+    
     context = {'username': getName(request.user.id), 'tickets': tickets, 'allCasesView': allCasesView}
     return render(request, 'scrHome.html', context)        
 
