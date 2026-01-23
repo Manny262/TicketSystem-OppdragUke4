@@ -1,13 +1,27 @@
 # TicketSystem-OppdragUke4
+## Innholdsfortegnelse
+- [Beskrivelse](#beskrivelse)
+- [Installasjonsveiledning](#installasjonsveiledning)
+    - [Forutsetninger](#forutsetninger)
+    - [1. Clone prosjektet fra GitHub](#1-clone-prosjektet-fra-github)
+    - [2. Opprett et virtuelt miljø](#2-opprett-et-virtuelt-miljø)
+    - [3. Installer nødvendige pakker](#3-installer-nødvendige-pakker)
+    - [4. Sett opp databasen](#4-sett-opp-databasen)
+    - [5. Opprett superbruker](#5-opprett-superbruker-hvis-man-vil-ha-tilgang-til-admin-panelet)
+    - [6. Start utviklingsserveren](#6-start-utviklingsserveren)
+    - [7. Tilgang til admin panel](#7-tilgang-til-admin-panel)
+    - [Kobling fra andre enheter](#kobling-fra-andre-enheter)
+
 ## Beskrivelse:
-Oppdrag uke 4: Utvikle første versjon ticketsystem for et lite IT-selskap (på fire dager).
+Dette er et oppdrag for uke 4, 2026: utvikle første versjon av et ticketsystem for et lite IT-selskap (på fire dager).Følg installasjonsinstruksjonene under for å sette opp prosjektet lokalt.
+
 
 ## Installasjonsveiledning
 
 ### Forutsetninger
 - Python 3.13.9 installert (eller nyere)
 - Git installert 
-
+- pgAdmin4 installert
 ### 1. Clone prosjektet fra GitHub
 
 **HTTPS**
@@ -31,7 +45,7 @@ cd TicketSystem-OppdragUke4\PROJECT_TICKETSYSTEM
 
 **Windows:**
 ```bash
-py-m venv venv
+py -m venv venv
 venv\Scripts\activate
 ```
 
@@ -48,28 +62,25 @@ source venv\bin\activate
 ```bash
 pip install -r requirements.txt
 ```
-asgiref==3.11.0
-beautifulsoup4==4.14.3
-Django==4.2.27
-django-bootstrap-v5==1.0.11
-psycopg2-binary==2.9.11
-python-decouple==3.8
-soupsieve==2.8.3
-sqlparse==0.5.5
-typing_extensions==4.15.0
-tzdata==2025.3
 
 ### 4. Sett opp databasen
 #### 4.1 Opprett PostgreSQL database
 
-Åpne PostgreSQL (pgAdmin) og opprett en database med navn  `ProjectTicketSystem`
+Åpne PostgreSQL (pgAdmin) og opprett en database med navn `ProjectTicketSystem`
 
-#### 4.2 Konfigurer database tilkobling
+#### 4.2 Secret key 
+Åpne terminalen og kopier output: 
+```bash
+python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+```
+#### 4.3 Konfigurer database tilkobling
 
 Åpne filen `PROJECT_TICKETSYSTEM\example-env` og oppdater verdiene til dine egne. 
 Endre navn : `example-env` -> `.env`
 
-#### 4.3 Kjør migrasjoner
+
+
+#### 4.4 Kjør migrasjoner
 
 ```bash
 python manage.py makemigrations

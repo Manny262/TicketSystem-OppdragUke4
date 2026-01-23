@@ -1,3 +1,5 @@
+SECRET_KEY=[din-secret-key]
+
 DB_ENGINE=django.db.backends.postgresql 
 DB_NAME=ProjectTicketSystem
 DB_USER=[ditt-postgres-brukernavn]

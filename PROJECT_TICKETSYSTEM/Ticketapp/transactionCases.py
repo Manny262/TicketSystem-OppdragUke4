@@ -2,6 +2,8 @@ import os
 import sys
 import django
 
+# legge til test tickets 
+# Slett før PRODUKSJON!
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 parent_dir = os.path.dirname(current_dir)
